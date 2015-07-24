@@ -1,0 +1,30 @@
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\PluginExampleCSharp\PluginExampleCSharp\bin\Debug\PluginExampleCSharp.pdb
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\PluginExampleCSharp\PluginExampleCSharp\bin\Debug\Interfaces.dll
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\PluginExampleCSharp\PluginExampleCSharp\obj\x86\Debug\PluginExampleCSharp.csprojResolveAssemblyReference.cache
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\PluginExampleCSharp\PluginExampleCSharp\obj\x86\Debug\PluginExampleCSharp.pdb
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\PluginExampleCSharp\PluginExampleCSharp\bin\Debug\PluginExampleCSharp.dll
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\PluginExampleCSharp\PluginExampleCSharp\obj\x86\Debug\PluginExampleCSharp.dll
+C:\Users\sratigan\Dropbox\PluginExampleCSharp\PluginExampleCSharp\bin\Debug\PluginExampleCSharp.dll
+C:\Users\sratigan\Dropbox\PluginExampleCSharp\PluginExampleCSharp\bin\Debug\PluginExampleCSharp.pdb
+C:\Users\sratigan\Dropbox\PluginExampleCSharp\PluginExampleCSharp\bin\Debug\Interfaces.dll
+C:\Users\sratigan\Dropbox\PluginExampleCSharp\PluginExampleCSharp\obj\x86\Debug\PluginExampleCSharp.csprojResolveAssemblyReference.cache
+C:\Users\sratigan\Dropbox\PluginExampleCSharp\PluginExampleCSharp\obj\x86\Debug\PluginExampleCSharp.dll
+C:\Users\sratigan\Dropbox\PluginExampleCSharp\PluginExampleCSharp\obj\x86\Debug\PluginExampleCSharp.pdb
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\ClassLibrary1\PluginExampleCSharp\bin\Debug\PluginExampleCSharp.dll
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\ClassLibrary1\PluginExampleCSharp\bin\Debug\PluginExampleCSharp.pdb
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\ClassLibrary1\PluginExampleCSharp\bin\Debug\Interfaces.dll
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\ClassLibrary1\PluginExampleCSharp\obj\x86\Debug\PluginExampleCSharp.csprojResolveAssemblyReference.cache
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\ClassLibrary1\PluginExampleCSharp\obj\x86\Debug\PluginExampleCSharp.dll
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\ClassLibrary1\PluginExampleCSharp\obj\x86\Debug\PluginExampleCSharp.pdb
+C:\Users\Tim\Desktop\Genie3 Plugin Example Csharp\ClassLibrary1\PluginExampleCSharp\bin\Debug\Interfaces.dll
+C:\Users\Tim\Desktop\Genie3 Plugin Example Csharp\ClassLibrary1\PluginExampleCSharp\obj\x86\Debug\PluginExampleCSharp.csprojResolveAssemblyReference.cache
+C:\Users\Tim\Desktop\Genie3 Plugin Example Csharp\ClassLibrary1\PluginExampleCSharp\bin\Debug\Notifier.dll
+C:\Users\Tim\Desktop\Genie3 Plugin Example Csharp\ClassLibrary1\PluginExampleCSharp\bin\Debug\Notifier.pdb
+C:\Users\Tim\Desktop\Genie3 Plugin Example Csharp\ClassLibrary1\PluginExampleCSharp\obj\x86\Debug\Notifier.dll
+C:\Users\Tim\Desktop\Genie3 Plugin Example Csharp\ClassLibrary1\PluginExampleCSharp\obj\x86\Debug\Notifier.pdb
+C:\Users\Tim\Desktop\Genie3 Plugin Spell timer\ClassLibrary1\PluginExampleCSharp\obj\x86\Debug\PluginExampleCSharp.csprojResolveAssemblyReference.cache
+C:\Users\Tim\Desktop\Genie3 Plugin Spell timer\ClassLibrary1\PluginExampleCSharp\bin\Debug\Interfaces.dll
+C:\Users\Tim\Desktop\Genie3 Plugin Spell timer\ClassLibrary1\PluginExampleCSharp\bin\Debug\SpellTimer.dll
+C:\Users\Tim\Desktop\Genie3 Plugin Spell timer\ClassLibrary1\PluginExampleCSharp\bin\Debug\SpellTimer.pdb
+C:\Users\Tim\Desktop\Genie3 Plugin Spell timer\ClassLibrary1\PluginExampleCSharp\obj\x86\Debug\SpellTimer.dll
+C:\Users\Tim\Desktop\Genie3 Plugin Spell timer\ClassLibrary1\PluginExampleCSharp\obj\x86\Debug\SpellTimer.pdb
