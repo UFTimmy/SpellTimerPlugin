@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginExampleCSharp", "PluginExampleCSharp\PluginExampleCSharp.csproj", "{7A12AD7A-D169-4730-BE26-3C990B3B932E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginExampleCSharp", "SpellTimerPlugin\PluginExampleCSharp.csproj", "{7A12AD7A-D169-4730-BE26-3C990B3B932E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
