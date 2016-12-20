@@ -19,6 +19,7 @@ namespace SpellTimerPlugin
     public class Class1 : IPlugin
     {
         private bool _enabled = true;
+        private string _filePath;
         
         //## List of all spells we know about.
         private List<Spell> spells;
@@ -32,6 +33,12 @@ namespace SpellTimerPlugin
         public void Initialize(IHost host)
         {
             this._host = host;
+            _filePath = _host.get_Variable("PluginPath");
+            //fix for Genie versions prior to 3.2
+            if (string.IsNullOrEmpty(_filePath))
+                _filePath = System.Windows.Forms.Application.StartupPath + @"\Plugins\";
+            if (!_filePath.EndsWith(@"\"))
+                _filePath += @"\";
             this.readSpellList();
         }
 
@@ -158,15 +165,20 @@ namespace SpellTimerPlugin
 
         private void serializeSpellList()
         {
+            string characterName = this._host.get_Variable("charactername");
+            if (characterName.Length == 0)
+                return;
+
             try
             {
-                FileStream writer = new FileStream(this.getXmlFileName(), FileMode.Create);
+                FileStream writer = new FileStream(this.getXmlFileName(characterName), FileMode.Create);
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Spell>));
                 serializer.Serialize(writer, this.spells);
                 writer.Close();
             }
-            catch (IOException)
+            catch (IOException ex)
             {
+                _host.EchoText("Error writing SpellTimer settings file: " + ex.Message);
             }
         }
 
@@ -180,26 +192,31 @@ namespace SpellTimerPlugin
 
             this._host.EchoText("Loading saved spells for SpellTimer for " + characterName);
 
-            try
+            string fileName = getXmlFileName(characterName);
+            if (File.Exists(fileName))
             {
-                using (Stream stream = File.Open(this.getXmlFileName(), FileMode.Open))
+                try
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(List<Spell>));
-                    this.spells = (List<Spell>)serializer.Deserialize(stream);
+                    using (Stream stream = File.Open(fileName, FileMode.Open))
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(List<Spell>));
+                        this.spells = (List<Spell>)serializer.Deserialize(stream);
 
-                    this._host.EchoText("We have " + this.spells.Count + " spells in the list.");
+                        this._host.EchoText("We have " + this.spells.Count + " spells in the list.");
+                    }
                 }
-            }
-            catch (IOException)
-            {
+                catch (IOException ex)
+                {
+                    _host.EchoText("Error reading SpellTimer settings file: " + ex.Message);
+                }
             }
 
             this.setGenieVariables();
         }
 
-        private string getXmlFileName()
+        private string getXmlFileName(string charName)
         {
-            return "SpellTimerSpells" + this._host.get_Variable("charactername") + ".xml";
+            return _filePath + "SpellTimerSpells" + charName + ".xml";
         }
 
         public string ParseInput(string text)
@@ -262,7 +279,7 @@ namespace SpellTimerPlugin
 
         public string Version
         {
-            get { return "1.0"; }
+            get { return "1.5"; }
         }
 
         public string Description
