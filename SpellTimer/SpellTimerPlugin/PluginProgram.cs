@@ -8,16 +8,16 @@ using System.Xml.Serialization;
 
 namespace SpellTimerPlugin
 {
-    //## Value class for holding spell info
-    public class Spell
+    public class SpellTimer : IPlugin
     {
-        public string name;
-        public bool active = false;
-        public int duration = 0;
-    }
+        //## Value class for holding spell info
+        public class Spell
+        {
+            public string name;
+            public bool active = false;
+            public int duration = 0;
+        }
 
-    public class Class1 : IPlugin
-    {
         private bool _enabled = true;
         private string _filePath;
         
@@ -53,10 +53,13 @@ namespace SpellTimerPlugin
 
         public string ParseText(string text, string window)
         {
-            if (text.StartsWith("You look around, taking a moment"))
+            if (text.StartsWith("Welcome to DragonRealms (R)"))
             {
-                //this._host.EchoText("We connected");
                 this.readSpellList();
+            }
+            if (text.StartsWith("Connection closed."))
+            {
+                this.serializeSpellList();
             }
 
             if (window.Equals("percwindow"))
@@ -124,8 +127,6 @@ namespace SpellTimerPlugin
 
                 //this._host.EchoText("Setting " + spellVarName + " to " + (spell.active ? "1" : "0"));
             }
-
-            this.serializeSpellList();
         }
 
         private void verifyGenieVariables()
@@ -175,6 +176,7 @@ namespace SpellTimerPlugin
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Spell>));
                 serializer.Serialize(writer, this.spells);
                 writer.Close();
+                _host.EchoText("SpellTimer settings saved.");
             }
             catch (IOException ex)
             {
@@ -242,6 +244,11 @@ namespace SpellTimerPlugin
 
                 return "";
             }
+            else if (text.ToLower().Equals("quit") || text.ToLower().Equals("exit"))
+            {
+                this.serializeSpellList();
+                return text;
+            }
             else
             {
                 return text;
@@ -270,6 +277,7 @@ namespace SpellTimerPlugin
 
         public void ParentClosing()
         {
+            this.serializeSpellList();
         }
 
         public string Name
@@ -284,7 +292,7 @@ namespace SpellTimerPlugin
 
         public string Description
         {
-            get { return "Turns the spell timer window into persistent variables.";  }
+            get { return "Turns the spell timer window into persistent variables that can be tested in scripts.";  }
         }
 
         public string Author
