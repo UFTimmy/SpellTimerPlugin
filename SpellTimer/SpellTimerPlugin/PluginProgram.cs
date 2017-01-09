@@ -53,7 +53,7 @@ namespace SpellTimerPlugin
 
         public string ParseText(string text, string window)
         {
-            if (text.StartsWith("Welcome to DragonRealms (R)"))
+            if (text.StartsWith("All Rights Reserved"))
             {
                 this.readSpellList();
             }
