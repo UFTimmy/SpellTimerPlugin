@@ -70,23 +70,31 @@ namespace SpellTimerPlugin
                 {
                     string spellName = match.Groups[1].Value;
 
-                    Regex durationPattern = new Regex("(\\d+) roisaen");
-                    Match durationMatch = durationPattern.Match(match.Groups[2].Value);
+                    int duration = 0;
+                    if (spellName.Equals("Osrel Meraud"))
+                    {
+                        Regex omPattern = new Regex("(\\d+)%");
+                        Match omMatch = omPattern.Match(match.Groups[2].Value);
 
-                    int duration;
-                    if (durationMatch.Success)
-                    {
-                        duration = Convert.ToInt32(durationMatch.Groups[1].Value);
-                    }
-                    else if (match.Groups[2].Value.Equals("OM") 
-                        || match.Groups[2].Value.Equals("Indefinite")
-                        || spellName.Equals("Osrel Meraud"))
-                    {
-                        duration = 999;
+                        if (omMatch.Success)
+                        {
+                            duration = Convert.ToInt32(omMatch.Groups[1].Value);
+                        }
                     }
                     else
                     {
-                        duration = 0;
+                        Regex durationPattern = new Regex("(\\d+) roisaen");
+                        Match durationMatch = durationPattern.Match(match.Groups[2].Value);
+
+                        if (durationMatch.Success)
+                        {
+                            duration = Convert.ToInt32(durationMatch.Groups[1].Value);
+                        }
+                        else if (match.Groups[2].Value.Equals("OM")
+                            || match.Groups[2].Value.Equals("Indefinite"))
+                        {
+                            duration = 999;
+                        }
                     }
 
                     bool spellInList = false;
