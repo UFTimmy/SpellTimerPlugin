@@ -33,12 +33,17 @@ namespace SpellTimerPlugin
         public void Initialize(IHost host)
         {
             this._host = host;
-            _filePath = _host.get_Variable("PluginPath");
-            //fix for Genie versions prior to 3.2
-            if (string.IsNullOrEmpty(_filePath))
-                _filePath = System.Windows.Forms.Application.StartupPath + @"\Plugins\";
-            if (!_filePath.EndsWith(@"\"))
-                _filePath += @"\";
+            this._filePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Genie Client 3\Plugins\";
+
+            try
+            {
+                Directory.CreateDirectory(this._filePath);
+            }
+            catch (IOException ex)
+            {
+                _host.EchoText("Error reading SpellTimer settings file: " + ex.Message);
+            }
+
             this.readSpellList();
         }
 
@@ -202,7 +207,7 @@ namespace SpellTimerPlugin
 
             this._host.EchoText("Loading saved spells for SpellTimer for " + characterName);
 
-            string fileName = getXmlFileName(characterName);
+            string fileName = this.getXmlFileName(characterName);
             if (File.Exists(fileName))
             {
                 try
@@ -226,7 +231,7 @@ namespace SpellTimerPlugin
 
         private string getXmlFileName(string charName)
         {
-            return _filePath + "SpellTimerSpells" + charName + ".xml";
+            return this._filePath + "SpellTimerSpells" + charName + ".xml";
         }
 
         public string ParseInput(string text)
