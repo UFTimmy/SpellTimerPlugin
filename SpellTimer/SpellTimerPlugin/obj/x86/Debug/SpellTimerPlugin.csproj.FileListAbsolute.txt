@@ -1,0 +1,6 @@
+C:\Users\mcherry.MRI\OneDrive\Genie Clients\SpellTimer\ActualVersion\SpellTimerPlugin-master\SpellTimer\SpellTimerPlugin\bin\Debug\SpellTimer.dll
+C:\Users\mcherry.MRI\OneDrive\Genie Clients\SpellTimer\ActualVersion\SpellTimerPlugin-master\SpellTimer\SpellTimerPlugin\bin\Debug\SpellTimer.pdb
+C:\Users\mcherry.MRI\OneDrive\Genie Clients\SpellTimer\ActualVersion\SpellTimerPlugin-master\SpellTimer\SpellTimerPlugin\obj\x86\Debug\SpellTimerPlugin.SpellTimerForm.resources
+C:\Users\mcherry.MRI\OneDrive\Genie Clients\SpellTimer\ActualVersion\SpellTimerPlugin-master\SpellTimer\SpellTimerPlugin\obj\x86\Debug\SpellTimerPlugin.csproj.GenerateResource.Cache
+C:\Users\mcherry.MRI\OneDrive\Genie Clients\SpellTimer\ActualVersion\SpellTimerPlugin-master\SpellTimer\SpellTimerPlugin\obj\x86\Debug\SpellTimer.dll
+C:\Users\mcherry.MRI\OneDrive\Genie Clients\SpellTimer\ActualVersion\SpellTimerPlugin-master\SpellTimer\SpellTimerPlugin\obj\x86\Debug\SpellTimer.pdb
