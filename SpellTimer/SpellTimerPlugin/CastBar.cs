@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.IO;
 using GeniePlugin.Interfaces;
+
 
 namespace SpellTimerPlugin
 {
@@ -82,27 +84,36 @@ namespace SpellTimerPlugin
         #region Public Methods
         public void RunTimer(int GameTimePrepWillFinish)
         {
-            LoadCountdownSettings();
-            if (!_enabled)
+            try
             {
-                return;
-            }
-            CastTime = GameTimePrepWillFinish;
-            if (Timer.IsAlive)
-            {
-                try{
-                    Timer.Abort();
-                }
-                catch (Exception ex)
+                LoadCountdownSettings();
+                if (!_enabled)
                 {
-                    //Aborting Thread can throw an error that the thread is being aborted.
-                    //Ignore that, we intended to abort.
+                    return;
                 }
+                CastTime = GameTimePrepWillFinish;
+                if (Timer.IsAlive)
+                {
+                    try
+                    {
+                        Timer.Abort();
+                    }
+                    catch (Exception ex)
+                    {
+                        //Aborting Thread can throw an error that the thread is being aborted.
+                        //Ignore that, we intended to abort.
+                    }
+                }
+                Timer = new Thread(CountdownTimer);
+                //this._host.SendText("#var CastTime " + CastTime);
+                //int.TryParse(_host.get_Variable("CastTime"), out CastTime;
+                Timer.Start();
             }
-            Timer = new Thread(CountdownTimer);
-            //this._host.SendText("#var CastTime " + CastTime);
-            //int.TryParse(_host.get_Variable("CastTime"), out CastTime;
-            Timer.Start();
+            catch (Exception ex)
+            {
+                ErrorLog.Write(_host, ex);
+            }
+
         }
 
         public void ParseInput(string input)
@@ -168,21 +179,33 @@ namespace SpellTimerPlugin
         #endregion
         private void CountdownTimer()
         {
-            int gametime = 0;
-            if (int.TryParse(_host.get_Variable("gametime"), out gametime))
+            try
             {
-                int preptime = CastTime - gametime;
-                int countdown = preptime;
-                this._host.SendText("#var CastTimeRemaining " + countdown.ToString());
-
-                while (_host.get_Variable("preparedspell") != "None")
+                int gametime = 0;
+                if (int.TryParse(_host.get_Variable("gametime"), out gametime))
                 {
-                    _host.SendText("#clear Casting;#echo >Casting " + CreateDisplayString(countdown, preptime));
-                    Thread.Sleep(countdown > 0 ? 1000 : 250);
-                    countdown--;
+                    int preptime = CastTime - gametime;
+                    int countdown = preptime;
+                    this._host.SendText("#var CastTimeRemaining " + countdown.ToString());
+
+                    while (_host.get_Variable("preparedspell") != "None")
+                    {
+                        _host.SendText("#clear Casting;#echo >Casting " + CreateDisplayString(countdown, preptime));
+                        Thread.Sleep(countdown > 0 ? 1000 : 250);
+                        if (countdown > 0)
+                        {
+                            countdown--;
+                            this._host.SendText("#var CastTimeRemaining " + countdown.ToString());
+                        }
+                    }
                 }
+                _host.SendText("#clear Casting");
             }
-            _host.SendText("#clear Casting");
+            catch(Exception ex)
+            {
+                if(!(ex.Message == "Thread was being aborted.")) ErrorLog.Write(_host, ex);
+
+            }
         }
 
         private string CreateDisplayString(int countdown, int preptime)
