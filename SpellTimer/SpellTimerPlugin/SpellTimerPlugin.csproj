@@ -8,7 +8,7 @@
     <ProjectGuid>{7A12AD7A-D169-4730-BE26-3C990B3B932E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpellTimer</RootNamespace>
+    <RootNamespace>SpellTimerPlugin</RootNamespace>
     <AssemblyName>SpellTimer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CastBar.cs" />
+    <Compile Include="ErrorLog.cs" />
     <Compile Include="PluginProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpellTimerForm.cs">

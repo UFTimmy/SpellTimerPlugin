@@ -201,30 +201,37 @@ namespace SpellTimerPlugin
         private void finishPop()
         {
             //this._host.EchoText("finishPop");
-
-            foreach (Spell spell in this.spells)
+            try
             {
-                bool wasPopped = false;
-                foreach (Spell poppedSpell in this.poppedSpells)
+                foreach (Spell spell in this.spells)
                 {
-                    if (poppedSpell.name.Equals(spell.name))
+                    bool wasPopped = false;
+                    foreach (Spell poppedSpell in this.poppedSpells)
                     {
-                        wasPopped = true;
-                        break;
+                        if (poppedSpell.name.Equals(spell.name))
+                        {
+                            wasPopped = true;
+                            break;
+                        }
+                    }
+
+                    //## Disable any spells we know about that were not popped.
+                    if (!wasPopped)
+                    {
+                        spell.active = false;
+                        spell.duration = 0;
+
+                        //this._host.EchoText(spell.name + " is not on the list, set to inactive.");
                     }
                 }
 
-                //## Disable any spells we know about that were not popped.
-                if (!wasPopped)
-                {
-                    spell.active = false;
-                    spell.duration = 0;
-
-                    //this._host.EchoText(spell.name + " is not on the list, set to inactive.");
-                }
+                this.setGenieVariables();
             }
-
-            this.setGenieVariables();
+            catch(Exception ex)
+            {
+                _host.SendText("#echo >DebugLog An error occured in the finishPop Method.");
+                _host.SendText("#echo >DebugLog " + ex.Message); 
+            }
         }
 
         private void setGenieVariables()
@@ -232,28 +239,35 @@ namespace SpellTimerPlugin
             //this._host.EchoText("We have " + this.spells.Count + " spells in the list.");
 
             //## Set Genie variables
-            foreach (Spell spell in this.spells)
+            try
             {
-                string activeVar = "SpellTimer." + this.spellNameToVariableName(spell.name) + ".active";
-                string activeValue = (spell.active ? "1" : "0");
-                if (!this._host.get_Variable(activeVar).Equals(activeValue))
+                foreach (Spell spell in this.spells)
                 {
-                    //this._host.EchoText("Updating " + spell.name + " active to " + activeValue);
-                    this._host.SendText("#var " + activeVar + " " + activeValue);
-                }
+                    string activeVar = "SpellTimer." + this.spellNameToVariableName(spell.name) + ".active";
+                    string activeValue = (spell.active ? "1" : "0");
+                    if (!this._host.get_Variable(activeVar).Equals(activeValue))
+                    {
+                        //this._host.EchoText("Updating " + spell.name + " active to " + activeValue);
+                        this._host.SendText("#var " + activeVar + " " + activeValue);
+                    }
 
-                string durationVar = "SpellTimer." + this.spellNameToVariableName(spell.name) + ".duration";
-                string durationValue = spell.duration.ToString();
-                if (!this._host.get_Variable(durationVar).Equals(durationValue))
-                {
-                    //this._host.EchoText("Updating " + spell.name + " duration to " + durationValue);
-                    this._host.SendText("#var " + durationVar + " " + durationValue);
-                }
-                //this._host.SendText("#var SpellTimer." + this.spellNameToVariableName(spell.name) + ".active " + (spell.active ? "1" : "0"));
-                //this._host.SendText("#var SpellTimer." + this.spellNameToVariableName(spell.name) + ".duration " + spell.duration.ToString());
-                //this._host.SendText("#save vars");
+                    string durationVar = "SpellTimer." + this.spellNameToVariableName(spell.name) + ".duration";
+                    string durationValue = spell.duration.ToString();
+                    if (!this._host.get_Variable(durationVar).Equals(durationValue))
+                    {
+                        //this._host.EchoText("Updating " + spell.name + " duration to " + durationValue);
+                        this._host.SendText("#var " + durationVar + " " + durationValue);
+                    }
+                    //this._host.SendText("#var SpellTimer." + this.spellNameToVariableName(spell.name) + ".active " + (spell.active ? "1" : "0"));
+                    //this._host.SendText("#var SpellTimer." + this.spellNameToVariableName(spell.name) + ".duration " + spell.duration.ToString());
+                    //this._host.SendText("#save vars");
 
-                //this._host.EchoText("Setting " + spellVarName + " to " + (spell.active ? "1" : "0"));
+                    //this._host.EchoText("Setting " + spellVarName + " to " + (spell.active ? "1" : "0"));
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.Write(_host, ex);
             }
         }
 
@@ -274,45 +288,54 @@ namespace SpellTimerPlugin
             catch (IOException ex)
             {
                 _host.EchoText("Error writing SpellTimer settings file: " + ex.Message);
+                ErrorLog.Write(_host, ex);
             }
         }
 
         private void readSpellList()
         {
-            this.spells = new List<Spell>();
-
-            string characterName = this._host.get_Variable("charactername");
-            if (characterName.Length == 0)
-                return;
-
-            this._host.EchoText("Loading saved spells for SpellTimer for " + characterName);
-
-            string fileName = this.getXmlFileName(characterName);
-            if (File.Exists(fileName))
+            try
             {
-                try
+                this.spells = new List<Spell>();
+
+                string characterName = this._host.get_Variable("charactername");
+                if (characterName.Length == 0)
+                    return;
+
+                this._host.EchoText("Loading saved spells for SpellTimer for " + characterName);
+
+                string fileName = this.getXmlFileName(characterName);
+                if (File.Exists(fileName))
                 {
-                    using (Stream stream = File.Open(fileName, FileMode.Open))
+                    try
                     {
-                        XmlSerializer serializer = new XmlSerializer(typeof(List<Spell>));
-                        this.spells = (List<Spell>)serializer.Deserialize(stream);
-
-                        //## Spellnames sometimes have spaces, and we weren't trimming them, so this will update existing files.
-                        foreach (Spell spell in this.spells)
+                        using (Stream stream = File.Open(fileName, FileMode.Open))
                         {
-                            spell.name = spell.name.Trim();
-                        }
+                            XmlSerializer serializer = new XmlSerializer(typeof(List<Spell>));
+                            this.spells = (List<Spell>)serializer.Deserialize(stream);
 
-                        this._host.EchoText("We have " + this.spells.Count + " spells in the list.");
+                            //## Spellnames sometimes have spaces, and we weren't trimming them, so this will update existing files.
+                            foreach (Spell spell in this.spells)
+                            {
+                                spell.name = spell.name.Trim();
+                            }
+
+                            this._host.EchoText("We have " + this.spells.Count + " spells in the list.");
+                        }
+                    }
+                    catch (IOException ex)
+                    {
+                        _host.EchoText("Error reading SpellTimer settings file: " + ex.Message);
                     }
                 }
-                catch (IOException ex)
-                {
-                    _host.EchoText("Error reading SpellTimer settings file: " + ex.Message);
-                }
-            }
 
-            this.setGenieVariables();
+                this.setGenieVariables();
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.Write(_host, ex);
+            }
+            
         }
 
         private string spellNameToVariableName(string spellVarName)
