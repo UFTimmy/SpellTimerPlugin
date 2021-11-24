@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="CastBar.cs" />
     <Compile Include="ErrorLog.cs" />
+    <Compile Include="Genie.cs" />
     <Compile Include="PluginProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpellTimerForm.cs">

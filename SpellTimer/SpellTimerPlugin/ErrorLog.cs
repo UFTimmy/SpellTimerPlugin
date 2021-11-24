@@ -9,11 +9,11 @@ namespace SpellTimerPlugin
 {
     class ErrorLog
     {
-        public static void Write(IHost host, Exception Log)
+        public static void Write(Exception Log)
         {
             try
             {
-                using (StreamWriter w = File.AppendText(host.get_Variable("PluginPath") + "\\SpellTImer\\errors.txt"))
+                using (StreamWriter w = File.AppendText(Genie.Instance.get_Variable("PluginPath") + "\\SpellTImer\\errors.txt"))
                 {
                     w.Write("\r\nLog Entry : ");
                     w.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}");
@@ -26,7 +26,7 @@ namespace SpellTimerPlugin
             }
             catch (Exception ex)
             {
-                host.EchoText("An Error occurred while trying to log the following error." +
+                Genie.Instance.EchoText("An Error occurred while trying to log the following error." +
                    Environment.NewLine +
                    Log.Message +
                    Environment.NewLine +
@@ -36,7 +36,7 @@ namespace SpellTimerPlugin
                    Environment.NewLine +
                    ex.Message
                    );
-            }   
+            }
         }
     }
 }

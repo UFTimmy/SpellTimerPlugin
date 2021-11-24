@@ -12,12 +12,11 @@ namespace SpellTimerPlugin
 {
     public partial class SpellTimerForm : Form
     {
-        private IHost _host;
+        private Genie _host => Genie.Instance;
 
-        public SpellTimerForm(IHost host)
+        public SpellTimerForm()
         {
             InitializeComponent();
-            _host = host;
             LoadSettings();
         }
 
