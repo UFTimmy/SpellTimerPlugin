@@ -31,11 +31,11 @@ namespace SpellTimerPlugin
         {
         }
 
-        private IHost _host;
+        private Genie _host => Genie.Instance;
 
         public void Initialize(IHost host)
         {
-            this._host = host;
+            Genie.Instance.Initialize(ref host);
             string _pluginPath = _host.get_Variable("PluginPath");
             if (!_pluginPath.EndsWith("\\")) _pluginPath += "\\";
             _filePath = _pluginPath + "SpellTimer\\";
@@ -107,13 +107,14 @@ namespace SpellTimerPlugin
             {
                 Regex pattern = new Regex("(.+?)\\s+\\((.+)\\)");
                 Match match = pattern.Match(text);
+
+                string spellName = match.Success ? match.Groups[1].Value.Trim() : text.Trim();
+                int duration = 0;
+                bool active = true;
+                bool success = false;
                 if (match.Success)
                 {
-                    string spellName = match.Groups[1].Value.Trim();
-
-                    //this._host.EchoText("percwindow update for " + spellName);
-
-                    int duration = 0;
+                    success = true;
                     if (spellName.Equals("Osrel Meraud"))
                     {
                         Regex omPattern = new Regex("(\\d+)%");
@@ -139,8 +140,30 @@ namespace SpellTimerPlugin
                             duration = 999;
                         }
                     }
+                }
+                else if (spellName.EndsWith("small orbiting slivers of lunar magic"))
+                {
+                    if (spellName.StartsWith("Many"))
+                    {
+                        duration = 2;
+                    }
+                    else if (spellName.StartsWith("No"))
+                    {
+                        duration = 0;
+                        active = false;
+                    }
+                    else
+                    {
+                        duration = 1;
+                    }
 
-                    Spell poppedSpell = new Spell { name = spellName, active = true, duration = duration };
+                    spellName = "Moonblade Slivers";
+                    success = true;
+                }
+
+                if (success)
+                {
+                    Spell poppedSpell = new Spell { name = spellName, active = active, duration = duration };
 
                     //this._host.EchoText("Update for " + poppedSpell.name + " - Duration: " + poppedSpell.duration.ToString());
 
@@ -151,7 +174,7 @@ namespace SpellTimerPlugin
                         {
                             spellInList = true;
 
-                            spell.active = true;
+                            spell.active = active;
                             spell.duration = duration;
                             break;
                         }
@@ -190,11 +213,11 @@ namespace SpellTimerPlugin
             if (castMatch.Success)
             {
                 int casttime;
-                if(int.TryParse(castMatch.Groups[1].Value, out casttime))
+                if (int.TryParse(castMatch.Groups[1].Value, out casttime))
                 {
                     _castbar.RunTimer(casttime);
                 }
-                
+
             }
         }
 
@@ -227,13 +250,12 @@ namespace SpellTimerPlugin
 
                 this.setGenieVariables();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _host.SendText("#echo >DebugLog An error occured in the finishPop Method.");
-                _host.SendText("#echo >DebugLog " + ex.Message); 
+                _host.SendText("#echo >DebugLog " + ex.Message);
             }
         }
-
         private void setGenieVariables()
         {
             //this._host.EchoText("We have " + this.spells.Count + " spells in the list.");
@@ -267,7 +289,7 @@ namespace SpellTimerPlugin
             }
             catch (Exception ex)
             {
-                ErrorLog.Write(_host, ex);
+                ErrorLog.Write(ex);
             }
         }
 
@@ -288,7 +310,7 @@ namespace SpellTimerPlugin
             catch (IOException ex)
             {
                 _host.EchoText("Error writing SpellTimer settings file: " + ex.Message);
-                ErrorLog.Write(_host, ex);
+                ErrorLog.Write(ex);
             }
         }
 
@@ -333,9 +355,9 @@ namespace SpellTimerPlugin
             }
             catch (Exception ex)
             {
-                ErrorLog.Write(_host, ex);
+                ErrorLog.Write(ex);
             }
-            
+
         }
 
         private string spellNameToVariableName(string spellVarName)
@@ -364,7 +386,7 @@ namespace SpellTimerPlugin
 
         public string Version
         {
-            get { return "1.7"; }
+            get { return "1.8"; }
         }
 
         public string Description
@@ -385,9 +407,9 @@ namespace SpellTimerPlugin
 
         public void Show()
         {
-            if(_form == null || _form.IsDisposed)
+            if (_form == null || _form.IsDisposed)
             {
-                _form = new SpellTimerForm(_host);
+                _form = new SpellTimerForm();
                 _form.Text = "SpellTimer Plugin v" + Version;
                 _form.MdiParent = _host.ParentForm;
             }
