@@ -4,3 +4,7 @@ C:\Users\mcherry.MRI\OneDrive\Genie Clients\SpellTimer\ActualVersion\SpellTimerP
 C:\Users\mcherry.MRI\OneDrive\Genie Clients\SpellTimer\ActualVersion\SpellTimerPlugin-master\SpellTimer\SpellTimerPlugin\obj\x86\Debug\SpellTimerPlugin.csproj.GenerateResource.Cache
 C:\Users\mcherry.MRI\OneDrive\Genie Clients\SpellTimer\ActualVersion\SpellTimerPlugin-master\SpellTimer\SpellTimerPlugin\obj\x86\Debug\SpellTimer.dll
 C:\Users\mcherry.MRI\OneDrive\Genie Clients\SpellTimer\ActualVersion\SpellTimerPlugin-master\SpellTimer\SpellTimerPlugin\obj\x86\Debug\SpellTimer.pdb
+F:\GitHubPorjects\SpellTimerPlugin\SpellTimer\SpellTimerPlugin\obj\x86\Debug\SpellTimerPlugin.csproj.AssemblyReference.cache
+F:\GitHubPorjects\SpellTimerPlugin\SpellTimer\SpellTimerPlugin\obj\x86\Debug\SpellTimerPlugin.SpellTimerForm.resources
+F:\GitHubPorjects\SpellTimerPlugin\SpellTimer\SpellTimerPlugin\obj\x86\Debug\SpellTimerPlugin.csproj.GenerateResource.cache
+F:\GitHubPorjects\SpellTimerPlugin\SpellTimer\SpellTimerPlugin\obj\x86\Debug\SpellTimerPlugin.csproj.CoreCompileInputs.cache

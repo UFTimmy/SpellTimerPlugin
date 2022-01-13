@@ -111,7 +111,7 @@ namespace SpellTimerPlugin
             }
             catch (Exception ex)
             {
-                ErrorLog.Write(_host, ex);
+                ErrorLog.Write(ex);
             }
 
         }
@@ -203,7 +203,7 @@ namespace SpellTimerPlugin
             }
             catch(Exception ex)
             {
-                if(!(ex.Message == "Thread was being aborted.")) ErrorLog.Write(_host, ex);
+                if(!(ex.Message == "Thread was being aborted.")) ErrorLog.Write(ex);
 
             }
         }
